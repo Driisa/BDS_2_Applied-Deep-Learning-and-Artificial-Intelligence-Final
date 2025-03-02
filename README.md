@@ -103,6 +103,6 @@ For more detailed information about the project:
 
 ## Contributors
 
-- [Vittorio Wollner Infante Papa]
-- [Oliver Højbjerre-Frandsen]
-- [Daniel Sørensen Riisager]
+- Vittorio Wollner Infante Papa
+- Oliver Højbjerre-Frandsen
+- Daniel Sørensen Riisager
