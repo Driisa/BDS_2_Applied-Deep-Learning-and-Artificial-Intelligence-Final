@@ -98,7 +98,7 @@ The application offers two modes of operation:
 ## Additional Documentation
 
 For more detailed information about the project:
-- [documantation.md](documantation.md): Details about the design and implementation in relation to the academic assignment
+- [Assignment ansswering](documantation.md): Details about the design and implementation in relation to the academic assignment
 - [Virtual Environment Setup](setup.md): Detailed guide for setting up the virtual environment
 
 ## Contributors
