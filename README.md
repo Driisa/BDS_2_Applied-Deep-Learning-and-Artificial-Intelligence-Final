@@ -1,7 +1,5 @@
 # AI Trend Tracker
 
-![AI Trend Tracker Interface](https://raw.githubusercontent.com/yourusername/ai-trend-tracker/main/screenshots/app_screenshot.png)
-
 A Streamlit-based web application that tracks, summarizes, and analyzes the latest developments in artificial intelligence using CrewAI and OpenAI.
 
 ## 🧠 Features
