@@ -1,9 +1,6 @@
 import streamlit as st
 import networkx as nx
-import matplotlib.pyplot as plt
 from pyvis.network import Network
-import pandas as pd
-import itertools
 import re
 import streamlit.components.v1 as components
 from typing import List, Dict, Any
@@ -58,7 +55,7 @@ def build_knowledge_graph(articles: List[Dict[Any, Any]], trends: Dict[Any, Any]
         
         # Connect key points to the article
         for point in clean_points:
-            if len(point) > 5:  # Only add substantive points
+            if len(point) > 5:  
                 point_node = f"point_{point[:20]}" 
                 G.add_node(point_node, size=5, group=3, title=point, label=point[:20] + "...")
                 G.add_edge(article_node, point_node, weight=1)

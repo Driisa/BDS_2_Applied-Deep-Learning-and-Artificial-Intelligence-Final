@@ -1,6 +1,4 @@
 from crewai import Crew, Process, Task
-from typing import List, Dict, Any
-import config
 from agents import (
     NewsExtractorTools, NewsSummarizerTools, NewsTrendAnalyzerTools, CombinedSummaryTools,
     news_extractor_agent, news_summarizer_agent, trend_analyzer_agent, executive_summarizer_agent
@@ -100,10 +98,9 @@ def get_summarized_news(query_terms=None, days=7, article_count=10, preferred_so
         )
         
         # Alternative simpler implementation that doesn't require running the full crew
-        # This can be used if the crew execution is causing issues or for faster results
         def run_simplified_pipeline():
             # Step 1: Fetch news articles
-            latest_news = extractor_tools.fetch_latest_ai_news(query_terms, days, article_count)
+            latest_news = extractor_tools.fetch_latest_ai_news(query_terms, days, article_count,True)
             
             if preferred_sources:
                 latest_news = filter_by_sources(latest_news, preferred_sources)
@@ -139,9 +136,7 @@ def get_summarized_news(query_terms=None, days=7, article_count=10, preferred_so
                 }
             }
         
-        # Choose which implementation to use
-        # True: Use full CrewAI implementation (slower but more robust)
-        # False: Use simplified pipeline (faster but less agent interaction)
+        # Choose which implementation to use (True: full CrewAI implementation) or (False: simplified pipeline)
         USE_FULL_CREW = False
         
         if USE_FULL_CREW:
@@ -149,12 +144,10 @@ def get_summarized_news(query_terms=None, days=7, article_count=10, preferred_so
             result = ai_news_crew.kickoff()
             
             # Process and format the results
-            # Note: You'd need to parse the outputs from the files saved by the tasks
-            # This is a placeholder for the full crew implementation
             return {
-                "articles": [],  # Would need to load from summarized_ai_news.json
-                "trends": {},    # Would need to load from ai_trend_analysis.json
-                "combined_summary": "",  # Would need to load from ai_executive_summary.txt
+                "articles": [],  # load from summarized_ai_news.json
+                "trends": {},    # load from ai_trend_analysis.json
+                "combined_summary": "",  #load from ai_executive_summary.txt
                 "error": "Full CrewAI implementation not fully implemented yet."
             }
         else:

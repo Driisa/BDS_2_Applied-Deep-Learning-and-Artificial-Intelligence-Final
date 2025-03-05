@@ -4,26 +4,29 @@ A Streamlit-based web application that tracks, summarizes, and analyzes the late
 
 ## 🧠 Features
 
-- **AI News Aggregation**: Collects the latest AI news from reputable sources
-- **Intelligent Summarization**: Automatically summarizes articles and rates their importance
-- **Trend Analysis**: Identifies and visualizes emerging trends in AI
+- **AI News Aggregation**: Collects the latest AI news from reputable sources via the Perigon API
+- **Intelligent Summarization**: Automatically summarizes articles and rates their importance on a 1-10 scale
+- **Trend Analysis**: Identifies and visualizes emerging trends in AI across multiple sources
 - **Executive Summaries**: Generates comprehensive overviews of the current AI landscape
-- **Customizable Searches**: Filter by topic, time range, and source
+- **Knowledge Graph**: Visualizes connections between topics, articles, and key points
+- **Customizable Searches**: Filter by topic, time range, source, and importance score
 
 ## 🛠️ Technologies
 
 - **Streamlit**: For the web application interface
 - **CrewAI**: For agent-based workflow orchestration
 - **OpenAI**: For intelligent content analysis and summarization
-- **Python**: Core programming language
+- **BeautifulSoup**: For web scraping and content extraction
+- **NetworkX & PyVis**: For knowledge graph creation and visualization
+- **Pandas**: For data handling and manipulation
 
 ## 📊 How It Works
 
 AI Trend Tracker uses a multi-agent system powered by CrewAI to process news articles:
 
-1. **News Extractor Agent**: Fetches relevant AI news articles based on search parameters
-2. **News Summarizer Agent**: Analyzes and summarizes each article, assigning importance scores
-3. **Trend Analyzer Agent**: Identifies patterns and emerging trends across articles
+1. **News Extractor Agent**: Fetches relevant AI news articles using the Perigon API and extracts full content from URLs
+2. **News Summarizer Agent**: Analyzes each article to produce concise summaries, importance scores, and key points
+3. **Trend Analyzer Agent**: Identifies patterns and emerging trends by analyzing topics across all articles
 4. **Executive Summarizer Agent**: Creates a comprehensive overview of the current AI landscape
 
 ## 🚀 Getting Started
@@ -42,7 +45,7 @@ AI Trend Tracker uses a multi-agent system powered by CrewAI to process news art
    cd ai-trend-tracker
    ```
 
-4. Setup the virtual inviroment
+2. Setup the virtual environment
    ```bash
    The guide can be found in setup.md
    ```
@@ -76,29 +79,47 @@ AI-TREND-TRACKER/
 ├── knowledge_graph.py        # Knowledge graph visualization
 ├── requirements.txt          # Project dependencies
 ├── README.md                 # Main project documentation
-├── documantation.md          # Assignment implementation details
-└── setup.md                  # Virtual environment setup guide
+├── documentation.md          # Implementation details
+├── setup.md                  # Virtual environment setup guide
+└── Previous Searches/        # Directory for saved search results
 ```
 
 ## 🔍 Usage
 
-1. **Choose a Topic**: Select a pre-defined filter or create a custom search query
-2. **Set Parameters**: Adjust the time range and number of articles
+1. **Choose a Topic**: Select a pre-defined filter (All AI News, Generative AI, AI Ethics, Research Breakthroughs, Business Applications) or create a custom search query
+2. **Set Parameters**: Adjust the time range (1-30 days) and number of articles (5-30)
 3. **Refresh News**: Click the refresh button to fetch the latest articles
-4. **Explore Results**: Browse through trending topics, executive summary, and article details
-5. **Filter**: Use the source filter to narrow down results by publication
+4. **Explore Results**: 
+   - View trending topics identified across articles
+   - Read the executive summary of key developments
+   - Browse through article cards with summaries and key points
+   - Explore the knowledge graph visualization
+5. **Filter Results**:
+   - Filter by source publication
+   - Set minimum importance score threshold
+   - Clear cache to reset all data
 
-## 🔄 CrewAI Implementation
+## 🔄 Implementation Approaches
 
 The application offers two modes of operation:
 
 1. **Full CrewAI Mode**: Uses the complete agent-based workflow with CrewAI for maximum flexibility and agent interaction
-2. **Simplified Pipeline**: Uses a direct function-based approach for faster results
+2. **Simplified Pipeline Mode**: Uses a direct function-based approach for faster results (currently the default)
+
+You can toggle between these modes by changing the `USE_FULL_CREW` flag in `crew_workflow.py`.
+
+## 💾 Data Storage
+
+The application stores data in several ways:
+
+1. **Session State**: Temporary storage during user interaction
+2. **JSON Files**: Search results are saved in the "Previous Searches" directory with date and query information
+3. **Task Output Files**: The CrewAI workflow can save intermediate results to JSON and text files
 
 ## Additional Documentation
 
 For more detailed information about the project:
-- [Assignment ansswering](documentation.md): Details about the design and implementation in relation to the academic assignment
+- [Implementation Details](documentation.md): Technical details about the system design and implementation
 - [Virtual Environment Setup](setup.md): Detailed guide for setting up the virtual environment
 
 ## Contributors

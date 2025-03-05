@@ -4,9 +4,36 @@ from datetime import datetime, timedelta
 import requests
 from typing import List, Dict, Any
 import config
+import os
+import json
+from bs4 import BeautifulSoup
 
 class NewsExtractorTools:
-    def fetch_latest_ai_news(self, query_terms=None, days=7, article_count=10):
+    def extract_content_from_url(self, url: str) -> str:
+        """Extract article content from a given URL using BeautifulSoup."""
+        try:
+            response = requests.get(url, timeout=10)
+            if response.status_code == 200:
+                soup = BeautifulSoup(response.text, 'html.parser')
+                
+                # Remove script and style elements
+                for element in soup(['script', 'style']):
+                    element.decompose()
+                
+                # Get text content
+                text = soup.get_text(separator='\n', strip=True)
+                
+                # Clean up the text
+                lines = [line.strip() for line in text.splitlines() if line.strip()]
+                content = '\n'.join(lines)
+                
+                return content
+            return ""
+        except Exception as e:
+            print(f"Error extracting content from {url}: {str(e)}")
+            return ""
+
+    def fetch_latest_ai_news(self, query_terms=None, days=7, article_count=10, save_results=False):
         """Fetch AI-related news from Perigon API."""
         try:
             query = query_terms or "Artificial Intelligence OR AI OR machine learning OR LLM"
@@ -31,18 +58,45 @@ class NewsExtractorTools:
                 
                 normalized_articles = []
                 for article in articles:
+                    article_url = article.get("url", "")
+                    # Extract content from URL if available
+                    extracted_content = self.extract_content_from_url(article_url) if article_url else ""
+                    
                     normalized_article = {
                         "title": article.get("title", "Untitled"),
-                        "url": article.get("url", ""),
+                        "url": article_url,
                         "publishedAt": article.get("pubDate", article.get("publishedAt", "")),
                         "description": article.get("description", ""),
-                        "content": article.get("content", ""),
+                        "content": extracted_content or article.get("content", ""),
                         "source": {
                             "name": article.get("source", {}).get("domain", 
                                     article.get("source", {}).get("name", "Unknown Source"))
                         }
                     }
                     normalized_articles.append(normalized_article)
+
+                # Save results to JSON file if save_results is True
+                if save_results and normalized_articles:
+                    # Create Previous Searches directory if it doesn't exist
+                    save_dir = os.path.join(os.path.dirname(__file__), "Previous Searches")
+                    os.makedirs(save_dir, exist_ok=True)
+                    
+                    # Create filename with date and query terms
+                    search_date = datetime.now().strftime("%Y-%m-%d")
+                    query_part = query_terms[:30] if query_terms else "general_ai_news"  # Limit length of query in filename
+                    query_part = "".join(c if c.isalnum() or c in "-_ " else "_" for c in query_part)  # Clean filename
+                    filename = f"{search_date}_{query_part}.json"
+                    
+                    # Save to JSON file
+                    file_path = os.path.join(save_dir, filename)
+                    with open(file_path, 'w', encoding='utf-8') as f:
+                        json.dump({
+                            "query": query,
+                            "search_date": search_date,
+                            "articles": normalized_articles
+                        }, f, indent=2, ensure_ascii=False)
+                    
+                    print(f"Search results saved to: {filename}")
                 
                 return normalized_articles
             else:
@@ -51,7 +105,6 @@ class NewsExtractorTools:
         except Exception as e:
             print(f"Error fetching news: {str(e)}")
             return []
-
 class NewsSummarizerTools:
     """Tool for summarizing AI news articles."""
     
@@ -60,7 +113,7 @@ class NewsSummarizerTools:
         self.prompt_template = """
 Analyze this AI news article and provide:
 1. A concise 5-9 sentence summary highlighting key innovations and significance
-2. An importance rating (1-10)
+2. An importance rating (1-10): Exemple a news that explane general information about the fild of AI is will be classify as a 5, since this is just general information that you can fine whit a webserch. Now, an article that talks about how a model is being applied in an area in an innovative way or about a new model will be considered a 9 or more depending on the content, because it is bringing a new perspective to the area.
 3. Three specific key points as a comma-separated list
 
 Article to summarize:
@@ -334,15 +387,17 @@ Ensure the summary is informative, forward-looking, and valuable for someone wan
 # Create CrewAI Agents using our tools
 news_extractor_agent = Agent(
     role="AI News Extractor",
-    goal="Retrieve the latest AI news from reputable sources",
-    backstory="Expert AI journalist with years of experience tracking AI industry trends.",
+    goal="""Retrieve the latest AI news from reputable sources,considering the time period of this and the previous week.
+    Focusing on articles about new research, tools and discoveries""",
+    backstory="""Expert AI professor with years of experience tracking AI industry trends,
+    with a passion for sharing new and relevant information in the field with their colleagues.""",
     verbose=True,
     allow_delegation=True
 )
 
 news_summarizer_agent = Agent(
     role="AI News Analyzer and Summarizer",
-    goal="Create insightful summaries of AI news that highlight true significance and filter hype.",
+    goal="Create insightful summaries of AI news that highlight true significance, filter out hype and product advertising.",
     backstory="""Distinguished AI researcher with expertise in evaluating and contextualizing 
     new developments in AI. Exceptional at distilling complex technical information into 
     accessible insights while maintaining technical accuracy.""",

@@ -2,8 +2,6 @@ import streamlit as st
 import sys
 import os
 from datetime import datetime
-import pandas as pd
-import json
 
 # Import your workflow function
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
@@ -193,7 +191,7 @@ with st.sidebar:
         default_query = "AI ethics OR AI bias OR AI regulation OR responsible AI"
     elif quick_filter == "Research Breakthroughs":
         default_query = "AI research breakthrough OR new AI model OR AI paper"
-    else:  # Business Applications
+    else: 
         default_query = "AI business application OR enterprise AI OR AI startup"
     
     # Search options    
@@ -427,9 +425,8 @@ if st.session_state.news_data:
         else:
             st.warning("No articles found matching your search criteria. Try broadening your search terms.")
 
-    # Knowledge Graph section
-    if articles:  # Use the main articles list, not filtered_articles
-        # Display the knowledge graph with all articles for better connections
+    # Knowledge Graph section and use the main articles list, not filtered_articles to Display the knowledge graph with all articles
+    if articles:
         display_knowledge_graph(articles, trends)
     else:
         st.info("No articles available for knowledge graph visualization. Try refreshing the news.")
