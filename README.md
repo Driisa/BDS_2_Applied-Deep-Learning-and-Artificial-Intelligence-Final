@@ -88,13 +88,6 @@ AI-NEWS-TRACKER/
 4. **Explore Results**: Browse through trending topics, executive summary, and article details
 5. **Filter**: Use the source filter to narrow down results by publication
 
-## 🔄 CrewAI Implementation
-
-The application offers two modes of operation:
-
-1. **Full CrewAI Mode**: Uses the complete agent-based workflow with CrewAI for maximum flexibility and agent interaction
-2. **Simplified Pipeline**: Uses a direct function-based approach for faster results
-
 ## Additional Documentation
 
 For more detailed information about the project:

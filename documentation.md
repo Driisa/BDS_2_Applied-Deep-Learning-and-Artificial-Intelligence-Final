@@ -127,13 +127,5 @@ The AI Trend Tracker agentic application demonstrates how AI agents can:
 3. Present complex information in accessible formats
 4. Save users significant time in staying informed about AI developments
 
-## 🔄 CrewAI Implementation
-
-The project offers two implementation approaches:
-
-1. **Full CrewAI Mode**: Uses the complete agent-based workflow for maximum flexibility
-2. **Simplified Pipeline**: Uses a direct function-based approach for faster results
-
 ---
 
-*This project was developed as part of the Final Assignment for the Agentic Systems course at Aalborg University.*
