@@ -100,7 +100,7 @@ def get_summarized_news(query_terms=None, days=7, article_count=10, preferred_so
         # Alternative simpler implementation that doesn't require running the full crew
         def run_simplified_pipeline():
             # Step 1: Fetch news articles
-            latest_news = extractor_tools.fetch_latest_ai_news(query_terms, days, article_count,True)
+            latest_news = extractor_tools.fetch_latest_ai_news(query_terms, days, article_count)
             
             if preferred_sources:
                 latest_news = filter_by_sources(latest_news, preferred_sources)
@@ -136,18 +136,17 @@ def get_summarized_news(query_terms=None, days=7, article_count=10, preferred_so
                 }
             }
         
-        # Choose which implementation to use (True: full CrewAI implementation) or (False: simplified pipeline)
+        # Choose which implementation to use (True: full CrewAI implementation or False: simplified pipeline)
         USE_FULL_CREW = False
         
         if USE_FULL_CREW:
-            # Run the crew and capture the results
             result = ai_news_crew.kickoff()
             
             # Process and format the results
             return {
-                "articles": [],  # load from summarized_ai_news.json
-                "trends": {},    # load from ai_trend_analysis.json
-                "combined_summary": "",  #load from ai_executive_summary.txt
+                "articles": [],  
+                "trends": {},    
+                "combined_summary": "",  
                 "error": "Full CrewAI implementation not fully implemented yet."
             }
         else:

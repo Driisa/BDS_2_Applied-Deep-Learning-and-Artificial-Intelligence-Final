@@ -16,6 +16,6 @@ networkx>=2.8.0
 pyvis>=0.3.1
 matplotlib>=3.6.0
 
-# Optional but recommended for performance
+# For better performance
 aiohttp>=3.8.5
 nest-asyncio>=1.5.6

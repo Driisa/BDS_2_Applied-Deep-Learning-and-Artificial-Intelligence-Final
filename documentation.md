@@ -2,7 +2,7 @@
 
 ## 📋 Assignment Objectives
 
-The assignment required the development of an project that:
+The assignment required the development of an innovative project that:
 - Employs GPT models and AI agents to address a real-world problem
 - Implements prompt engineering techniques
 - Develops an interactive Streamlit application
@@ -10,7 +10,7 @@ The assignment required the development of an project that:
 
 ## 🎯 Problem Addressed
 
-AI Trend Tracker addresses the real-world challenge of **information overload in AI developments**. The field of AI moves rapidly, with a lot of developments published often across various platforms. This creates a significant challenge for professionals, researchers, and enthusiasts to stay informed about the all the latest trends, breakthroughs, and applications.
+AI Trend Tracker addresses the real-world challenge of **information overload in AI research and development**. The field of AI moves rapidly, with a lot of developments published often across various platforms. This creates a significant challenge for professionals, researchers, and enthusiasts to stay informed about the all the latest trends, breakthroughs, and applications.
 
 The solution is a automated process:
 1. Finding relevant AI news from reliable sources
@@ -136,4 +136,4 @@ The project offers two implementation approaches:
 
 ---
 
-*This project was developed as part of the Final Assignment for the Deep learning course at Aalborg University.*
+*This project was developed as part of the Final Assignment for the Agentic Systems course at Aalborg University.*

@@ -2,6 +2,8 @@ import streamlit as st
 import sys
 import os
 from datetime import datetime
+import pandas as pd
+import json
 
 # Import your workflow function
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
@@ -10,7 +12,7 @@ from knowledge_graph import display_knowledge_graph
 
 # Page configuration
 st.set_page_config(
-    page_title="AI Trend Tracker",
+    page_title="AI News Tracker",
     page_icon="🧠",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -157,7 +159,7 @@ st.markdown("""
 st.markdown("""
     <div class="app-header">
         <div>
-            <h1 class="app-title">🧠 AI Trend Tracker</h1>
+            <h1 class="app-title">🧠 AI News Tracker</h1>
             <p class="app-subtitle">Stay informed with the latest AI developments</p>
         </div>
     </div>
@@ -191,16 +193,11 @@ with st.sidebar:
         default_query = "AI ethics OR AI bias OR AI regulation OR responsible AI"
     elif quick_filter == "Research Breakthroughs":
         default_query = "AI research breakthrough OR new AI model OR AI paper"
-    else: 
+    else:  
         default_query = "AI business application OR enterprise AI OR AI startup"
     
-    # Search options    
-    st.subheader("Search Terms")
-    query = st.text_area(
-        "Custom search query",
-        value=default_query,
-        height=80
-    )
+    # Define query based on the quick filter without showing the text_area
+    query = default_query 
     
     col1, col2 = st.columns(2)
     with col1:
@@ -425,8 +422,8 @@ if st.session_state.news_data:
         else:
             st.warning("No articles found matching your search criteria. Try broadening your search terms.")
 
-    # Knowledge Graph section and use the main articles list, not filtered_articles to Display the knowledge graph with all articles
-    if articles:
+    # Knowledge Graph section
+    if articles:  
         display_knowledge_graph(articles, trends)
     else:
         st.info("No articles available for knowledge graph visualization. Try refreshing the news.")

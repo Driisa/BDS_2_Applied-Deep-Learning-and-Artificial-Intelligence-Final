@@ -83,8 +83,8 @@ class NewsExtractorTools:
                     
                     # Create filename with date and query terms
                     search_date = datetime.now().strftime("%Y-%m-%d")
-                    query_part = query_terms[:30] if query_terms else "general_ai_news"  # Limit length of query in filename
-                    query_part = "".join(c if c.isalnum() or c in "-_ " else "_" for c in query_part)  # Clean filename
+                    query_part = query_terms[:30] if query_terms else "general_ai_news" 
+                    query_part = "".join(c if c.isalnum() or c in "-_ " else "_" for c in query_part)  
                     filename = f"{search_date}_{query_part}.json"
                     
                     # Save to JSON file
@@ -113,7 +113,7 @@ class NewsSummarizerTools:
         self.prompt_template = """
 Analyze this AI news article and provide:
 1. A concise 5-9 sentence summary highlighting key innovations and significance
-2. An importance rating (1-10): Exemple a news that explane general information about the fild of AI is will be classify as a 5, since this is just general information that you can fine whit a webserch. Now, an article that talks about how a model is being applied in an area in an innovative way or about a new model will be considered a 9 or more depending on the content, because it is bringing a new perspective to the area.
+2. An importance rating (1-10): Exemple a news that explane general information about the fild of AI is will be classify as a 4, since this is just general information that you can fine whit a webserch. Now, an article that talks about how a model is being applied in an area in an innovative way or about a new model will be considered a 9 or more depending on the content, because it is bringing a new perspective to the area.
 3. Three specific key points as a comma-separated list
 
 Article to summarize:

@@ -27,7 +27,6 @@ def build_knowledge_graph(articles: List[Dict[Any, Any]], trends: Dict[Any, Any]
     
     # Process articles
     for article in articles:
-        # Get article properties
         title = article.get("title", "Untitled")
         source = article.get("source", {}).get("name", "Unknown")
         importance = article.get("importance_score", 0)
@@ -55,7 +54,7 @@ def build_knowledge_graph(articles: List[Dict[Any, Any]], trends: Dict[Any, Any]
         
         # Connect key points to the article
         for point in clean_points:
-            if len(point) > 5:  
+            if len(point) > 5:  # Only add substantive points
                 point_node = f"point_{point[:20]}" 
                 G.add_node(point_node, size=5, group=3, title=point, label=point[:20] + "...")
                 G.add_edge(article_node, point_node, weight=1)
@@ -70,7 +69,6 @@ def build_knowledge_graph(articles: List[Dict[Any, Any]], trends: Dict[Any, Any]
 
 def generate_interactive_graph(G, height=500):
     """Generate an interactive HTML visualization of the knowledge graph."""
-    # Create pyvis network
     net = Network(height=f"{height}px", width="100%", bgcolor="#ffffff", font_color="#333333")
     
     # Configure physics
@@ -84,12 +82,12 @@ def generate_interactive_graph(G, height=500):
         label = attrs.get('label', node)
         
         # Set node color based on group
-        if group == 1:  # Trending topics
-            color = "#3a86ff"  # Blue for trending topics
-        elif group == 2:  # Articles
-            color = "#ff006e"  # Pink for articles
-        else:  # Key points
-            color = "#8338ec"  # Purple for key points
+        if group == 1: 
+            color = "#3a86ff"  
+        elif group == 2:  
+            color = "#ff006e"  
+        else: 
+            color = "#8338ec"  
             
         net.add_node(node, size=size, color=color, title=title, label=label)
     
