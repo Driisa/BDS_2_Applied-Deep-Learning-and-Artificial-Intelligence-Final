@@ -1,4 +1,4 @@
-# AI Trend Tracker
+# AI News Tracker
 
 A Streamlit-based web application that tracks, summarizes, and analyzes the latest developments in artificial intelligence using CrewAI and OpenAI.
 
@@ -38,8 +38,8 @@ AI Trend Tracker uses a multi-agent system powered by CrewAI to process news art
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/yourusername/ai-trend-tracker.git
-   cd ai-trend-tracker
+   git clone https://github.com/yourusername/ai-news-tracker.git
+   cd ai-news-tracker
    ```
 
 4. Setup the virtual inviroment
@@ -68,7 +68,7 @@ AI Trend Tracker uses a multi-agent system powered by CrewAI to process news art
 ## 🧩 Project Structure
 
 ```
-AI-TREND-TRACKER/
+AI-NEWS-TRACKER/
 ├── app.py                    # Main Streamlit application
 ├── config.py                 # Configuration settings
 ├── agents.py                 # Agent definitions and tools
